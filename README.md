@@ -1,53 +1,40 @@
-Overview
+# Overview
 
-Our aim was to fully solve the naval battle problem using the tools provided by reinforcement learning.
+Our aim was to fully solve the naval battle problem using the tools provided by reinforcement learning. This was achieved in several stages:
+• Implementation of an environment adapted to handling the tools
+• Training an agent to optimally search for randomly placed boats
+• Training an agent to optimally place boats in front of an agent applying a given strategy.
+• Combine the two agents in the best possible way
 
-Table of Contents
+# Table of Contents
 
 - Project Structure
+- Installation
 - Usage
-- Data
-- Models
-- Evaluation
+- Environnement
 
-Project Structure
+# Project Structure
 
-- the scripts for the feature extractions, data processing, models training and testing, results shaping for submission;
-- the pre-trained models from the scripts that produce good results.
+- V1 : Simple reward function and algorithms from the Labs with very few adaptation. This implementation give no result.
+- V2 : More complex reward function and simple DQN to learn from thousands of episode (very good results on a simple problem). We also have here all the part about adversarial agent.
+- V3 : Attempt to add complex methods but impossible to increase the complexity of the problem.
 
-Installation
+# Installation
 
 In the beginning of each notebook, the list of required libraries is provided in the first cell where they are imported.
 
-Usage
+# Usage
 
 Every jupyter notebook is independant from the others. In each notebook, you have:
 
 1) The imports of the required libraries
-2) The feature extraction
-3) The feature reshaping depending on the model used
-4) The tokenization of the text
-5) The batching of the inputs
-6) The description of the model
-7) The definition of the hyperparameters and the training
-8) The evaluation of the testing datasets
+2) The creation of the environnement
+3) The training of the agent
+4) The results of our models
 
 You can execute these different cells in this order and you will get our results.
 
-Data
+# Environnement
 
-For the different dialogue datasets, we have a JSON files with the utterances, their speaker and index in the dialogue. Additionnaly, we have a TXT file describing the graph structure of the dialogue. The utterances are the nodes described by their index and the edges are categorical variables explaining the relationships between the utterances.
+We fully reimplemented the battleship game (in particular with the .step(), .reset() functions, etc.). For the design of our environment, we decided to model the board as an n × n array. Each value of the array represents the state of the corresponding case on the board: 0 for a case that has not been touched, −1 for a “miss” case, case targeted by the player but where there was no boat and 1 for a “touched” boat by a move from the player.
 
-Models
-
-We have 4 jupyter notebooks:
-
-- jupyter_ML_model : One is about classic machine learning models such as RandomForest or SVM.
-- jupyter_best_f1 : One contains our deep learning models giving the best reults. They use various neural networks.
-- jupyter_pretrained_embedding : One also develops neural networks but with other data embedding steps.
-- jupyter_GNN : One develops a graph neural network.
-
-Evaluation
-
-Firstly, we divided the training set into a train set and a validation set to get intermediary results during the training step and to approximate the results we might have on the testing set.
-During the numerous epochs of the training step, we used the loss anf F1-score of the validation set.
